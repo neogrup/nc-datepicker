@@ -1,25 +1,36 @@
 {
-  "name": "nc-datepicker",
-  "main": "nc-datepicker.js",
-  "dependencies": {
-    "@polymer/polymer": "^3.0.0"
+  "description": "Polymer component with custom datepicker options",
+  "keywords": [
+    "web-components",
+    "polymer",
+    "nc"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NEOGRUP/nc-datepicker"
   },
-  "devDependencies": {
+  "name": "@neogrup/nc-datepicker",
+  "main": "nc-datepicker.js",
+  "version": "1.0.1",
+  "dependencies": {
+    "@polymer/polymer": "^3.0.0",
     "@neogrup/nc-combo": "^1.0.1",
     "@neogrup/nc-icons": "^1.0.6",
-    "@polymer/iron-demo-helpers": "^3.1.0",
     "@polymer/app-localize-behavior": "^3.0.0",
-    "@polymer/test-fixture": "^4.0.2",
     "@polymer/iron-flex-layout": "^3.0.0",
     "@polymer/iron-icon": "^3.0.0",
     "@polymer/iron-icons": "^3.0.1",
     "@polymer/iron-iconset-svg": "^3.0.0",
     "@polymer/paper-icon-button": "^3.0.0",
-    "@webcomponents/webcomponentsjs": "^2.0.0",
     "@vaadin/vaadin-date-picker": "^4.4.1",
+    "moment": "^2.29.1"
+  },
+  "devDependencies": {
+    "@polymer/test-fixture": "^4.0.2",
+    "@polymer/iron-demo-helpers": "^3.1.0",
+    "@webcomponents/webcomponentsjs": "^2.0.0",
     "chai": "^4.2.0",
     "mocha": "^6.1.4",
-    "wct-mocha": "^1.0.1",
-    "moment": "^2.29.1"
+    "wct-mocha": "^1.0.1"
   }
 }
