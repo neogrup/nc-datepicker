@@ -96,16 +96,20 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
           @apply --layout-center-justified;
         }
 
+        paper-icon-button[active] {
+          color: var(--app-accent-color);
+        }
+
       </style>
 
       <nc-icons></nc-icons>
 
       <div>
         <div class="dateTypeSelector">
-          <div><paper-icon-button icon="nc-icons:calendar_365" on-tap="_changeDateTypeSelector" data-date-selector="year"></paper-icon-button></div>
-          <div><paper-icon-button icon="nc-icons:calendar_31" on-tap="_changeDateTypeSelector" data-date-selector="month"></paper-icon-button></div>
-          <div><paper-icon-button icon="nc-icons:calendar_1" on-tap="_changeDateTypeSelector" data-date-selector="day"></paper-icon-button></div>
-          <div><paper-icon-button icon="nc-icons:calendar_range" on-tap="_changeDateTypeSelector" data-date-selector="range"></paper-icon-button></div>
+          <div><paper-icon-button id="calendar365"  icon="nc-icons:calendar_365" on-tap="_changeDateTypeSelector" data-date-selector="year"></paper-icon-button></div>
+          <div><paper-icon-button id="calendar31" icon="nc-icons:calendar_31" on-tap="_changeDateTypeSelector" data-date-selector="month"></paper-icon-button></div>
+          <div><paper-icon-button id="calendar1" icon="nc-icons:calendar_1" on-tap="_changeDateTypeSelector" data-date-selector="day"></paper-icon-button></div>
+          <div><paper-icon-button id="calendarRange" icon="nc-icons:calendar_range" on-tap="_changeDateTypeSelector" data-date-selector="range"></paper-icon-button></div>
         </div>
         
         <div hidden\$="{{!showYearSelector}}">
@@ -116,7 +120,7 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
                   label="{{localize('INPUT_YEAR')}}" 
                   no-label-float
                   combo-list-data="{{dataDateSelectorYearList}}" 
-                  url-translate="/static/translations.json" 
+                  url-translate={{urlTranslate}}
                   required-message="INPUT_ERROR_REQUIRED" 
                   id-field="id" 
                   value="{{dateSelectorYearValue}}" 
@@ -135,7 +139,7 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
                   label="{{localize('INPUT_YEAR')}}" 
                   no-label-float
                   combo-list-data="{{dataDateSelectorYearList}}" 
-                  url-translate="/static/translations.json" 
+                  url-translate={{urlTranslate}}
                   required-message="INPUT_ERROR_REQUIRED" 
                   id-field="id" 
                   value="{{dateSelectorMonthYearValue}}" 
@@ -149,7 +153,7 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
                   label="{{localize('INPUT_MONTH')}}" 
                   no-label-float
                   combo-list-data="{{dataDateSelectorMonthList}}" 
-                  url-translate="/static/translations.json" 
+                  url-translate={{urlTranslate}}
                   required-message="INPUT_ERROR_REQUIRED" 
                   id-field="id" 
                   value="{{dateSelectorMonthValue}}" 
@@ -254,6 +258,10 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
         type: String,
         notify: true
       },
+      urlTranslate:{
+        type: String,
+        value: "/node_modules/@neogrup/nc-datepicker/static/translations.json"
+      }
     };
   }
 
@@ -268,9 +276,9 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
     this.loadResources(this.resolveUrl('./static/translations.json'));
 
     setTimeout(() => this._setDatePickerLanguage(), 100);     
-    setTimeout(() => this._setYearList(), 100);     
-    setTimeout(() => this._setMonthList(), 100);
-    setTimeout(() => this._changeDateTypeSelector(), 100);
+    setTimeout(() => this._setYearList(), 200);     
+    setTimeout(() => this._setMonthList(), 200);
+    setTimeout(() => this._changeDateTypeSelector(), 200);
   }
 
   _setDatePickerLanguage() {
@@ -347,7 +355,12 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
     this.showMonthSelector = false;
     this.showDaySelector = false;
     this.showRangeSelector = false;
+    let paperButtonsIcons = this.shadowRoot.querySelectorAll("paper-icon-button");
     
+    paperButtonsIcons.forEach(paperButtonIcon => {
+      if (paperButtonIcon.active) paperButtonIcon.removeAttribute("active");
+    });
+
     let dateSelector;
 
     let currentYear = moment().format('YYYY');
@@ -370,32 +383,40 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
       }
     }
 
-    
-
     switch (dateSelector) {
       case 'year':
+        this.$.calendar365.setAttribute("active");
         this.showYearSelector = true;
         this.dateSelectorYearValue = currentYear;
         this.datePickerStartValue = currentYear + '0101';
         this.datePickerEndValue = currentYear + '1231';
+        this.dispatchEvent(new CustomEvent('date-changed', {detail: {dateStartValue: this.datePickerStartValue, dateEndValue: this.datePickerEndValue }, bubbles: true, composed: true }));
         break;
       case 'month':
+        this.$.calendar31.setAttribute("active");
         this.showMonthSelector = true;
         this.dateSelectorMonthYearValue = currentYear;
         this.dateSelectorMonthValue = currentMonth;
         this.datePickerStartValue = currentYear + currentMonth + '01';
         this.datePickerEndValue = currentYear + currentMonth + moment().endOf('month').format('DD');
+        this.dispatchEvent(new CustomEvent('date-changed', {detail: {dateStartValue: this.datePickerStartValue, dateEndValue: this.datePickerEndValue }, bubbles: true, composed: true }));
         break;
       case 'day':
+        this.$.calendar1.setAttribute("active");
         this.showDaySelector = true;
         this.dateSelectorDayValue = currentDay;
         this.datePickerStartValue = currentDay.replace(/-/gi,'');
         this.datePickerEndValue = currentDay.replace(/-/gi,'');
+        this.dispatchEvent(new CustomEvent('date-changed', {detail: {dateStartValue: this.datePickerStartValue, dateEndValue: this.datePickerEndValue }, bubbles: true, composed: true }));
         break;
       case 'range':
+        this.$.calendarRange.setAttribute("active");
         this.showRangeSelector = true;
         this.dateSelectorRangeStartValue = moment(this.datePickerStartValue).format('YYYY-MM-DD');
         this.dateSelectorRangeEndValue = moment(this.datePickerEndValue).format('YYYY-MM-DD');
+        this.datePickerStartValue = this.dateSelectorRangeStartValue.replace(/-/gi,'');
+        this.datePickerEndValue = this.dateSelectorRangeEndValue.replace(/-/gi,'');
+        this.dispatchEvent(new CustomEvent('date-changed', {detail: {dateStartValue: this.datePickerStartValue, dateEndValue: this.datePickerEndValue }, bubbles: true, composed: true }));
         break;
       default:
         break;
@@ -407,6 +428,7 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
     if (selectedDateSelectorYearIndex == -1) return;
     this.datePickerStartValue = this.dateSelectorYearValue + '0101';
     this.datePickerEndValue = this.dateSelectorYearValue + '1231';
+    this.dispatchEvent(new CustomEvent('date-changed', {detail: {dateStartValue: this.datePickerStartValue, dateEndValue: this.datePickerEndValue }, bubbles: true, composed: true }));
   }
 
   _dateSelectorMonthValueChanged(){
@@ -415,22 +437,26 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
     if ((selectedDateSelectorMonthYearIndex == -1) || (selectedDateSelectorMonthIndex == -1)) return;
     this.datePickerStartValue = this.dateSelectorMonthYearValue + this.dateSelectorMonthValue + '01';
     this.datePickerEndValue = this.dateSelectorMonthYearValue + this.dateSelectorMonthValue + moment(this.dateSelectorMonthYearValue + this.dateSelectorMonthValue).endOf('month').format('DD');
+    this.dispatchEvent(new CustomEvent('date-changed', {detail: {dateStartValue: this.datePickerStartValue, dateEndValue: this.datePickerEndValue }, bubbles: true, composed: true }));
   }
 
   _dateSelectorDayValueChanged(e){
     if (!e.detail.value) return;
     this.datePickerStartValue =  e.detail.value.replace(/-/gi,'');
     this.datePickerEndValue =  e.detail.value.replace(/-/gi,'');
+    this.dispatchEvent(new CustomEvent('date-changed', {detail: {dateStartValue: this.datePickerStartValue, dateEndValue: this.datePickerEndValue }, bubbles: true, composed: true }));
   }
   
   _dateSelectorRangeStartValueChanged(e){
     if (!e.detail.value) return;
     this.datePickerStartValue =  e.detail.value.replace(/-/gi,'');
+    this.dispatchEvent(new CustomEvent('date-changed', {detail: {dateStartValue: this.datePickerStartValue, dateEndValue: this.datePickerEndValue.replace(/-/gi,'') }, bubbles: true, composed: true }));
   }
 
   _dateSelectorRangeEndValueChanged(e){
     if (!e.detail.value) return;
     this.datePickerEndValue = e.detail.value.replace(/-/gi,'');
+    this.dispatchEvent(new CustomEvent('date-changed', {detail: {dateStartValue: this.datePickerStartValue.replace(/-/gi,''), dateEndValue: this.datePickerEndValue }, bubbles: true, composed: true }));
   }
   
 }
