@@ -194,7 +194,7 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
     return {
       language: {
         type: String,
-        value: 'es'
+        observer: '_languageChanged',
       },
       defaultDateSelector: {
         type: String,
@@ -279,6 +279,13 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
     setTimeout(() => this._setYearList(), 200);     
     setTimeout(() => this._setMonthList(), 200);
     setTimeout(() => this._changeDateTypeSelector(), 200);
+  }
+
+  _languageChanged(){
+    moment.locale(this.language);
+    this._setDatePickerLanguage();
+    this._setYearList();
+    this._setMonthList();
   }
 
   _setDatePickerLanguage() {
