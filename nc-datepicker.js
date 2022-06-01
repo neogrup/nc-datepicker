@@ -260,8 +260,11 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
       },
       urlTranslate:{
         type: String,
-        value: "/node_modules/@neogrup/nc-datepicker/static/translations.json"
-      }
+        value: function() {
+          let url = this.resolveUrl('./static/translations.json');
+          return url;
+        }
+      },
     };
   }
 
