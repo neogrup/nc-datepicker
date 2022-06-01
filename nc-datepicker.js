@@ -68,6 +68,7 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
       <style>
         :host {
           display: block;
+          --nc-datepicker-icon-color: rgb(33,33,33);
         }
 
         .dateTypeSelector{
@@ -94,6 +95,10 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
         .dateSelectorRange{
           @apply --layout-horizontal;
           @apply --layout-center-justified;
+        }
+
+        paper-icon-button{
+          color: var(--nc-datepicker-icon-color);
         }
 
         paper-icon-button[active] {
