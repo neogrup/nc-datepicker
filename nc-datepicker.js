@@ -270,9 +270,9 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
           return url;
         }
       },
-      autoDate: {
+      noAutoDate: {
         type: Boolean,
-        value: true
+        value: false
       },
     };
   }
@@ -295,7 +295,7 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
     setTimeout(() => this._setDatePickerLanguage(), 100);     
     setTimeout(() => this._setYearList(), 200);     
     setTimeout(() => this._setMonthList(), 200);
-    if (this.autoDate) {
+    if (!this.noAutoDate) {
       setTimeout(() => this._changeDateTypeSelector(), 200);
     }
   }
