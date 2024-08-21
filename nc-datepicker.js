@@ -295,7 +295,7 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
     setTimeout(() => this._setDatePickerLanguage(), 100);     
     setTimeout(() => this._setYearList(), 200);     
     setTimeout(() => this._setMonthList(), 200);
-    if (autoDate) {
+    if (this.autoDate) {
       setTimeout(() => this._changeDateTypeSelector(), 200);
     }
   }
