@@ -271,7 +271,7 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
         }
       },
       autoDate: {
-        type: String,
+        type: Boolean,
         value: true
       },
     };
