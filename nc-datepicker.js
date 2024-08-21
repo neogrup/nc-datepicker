@@ -270,6 +270,10 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
           return url;
         }
       },
+      autoDate: {
+        type: String,
+        value: true
+      },
     };
   }
 
@@ -283,10 +287,17 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
 
     this.loadResources(this.resolveUrl('./static/translations.json'));
 
+    this.showYearSelector = false;
+    this.showMonthSelector = false;
+    this.showDaySelector = false;
+    this.showRangeSelector = false;
+
     setTimeout(() => this._setDatePickerLanguage(), 100);     
     setTimeout(() => this._setYearList(), 200);     
     setTimeout(() => this._setMonthList(), 200);
-    setTimeout(() => this._changeDateTypeSelector(), 200);
+    if (autoDate) {
+      setTimeout(() => this._changeDateTypeSelector(), 200);
+    }
   }
 
   _languageChanged(){
