@@ -376,8 +376,8 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
     };
   }
 
-  _updateView() {
-    if (this.startDate != this.endDate) {            
+  _updateView(startDate, endDate) {
+    if (startDate != endDate) {            
       this.showDaySelector = false;
       this.showMonthSelector = false;
       this.showYearSelector = false;
@@ -396,9 +396,11 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
 
     if (this.showDaySelector) {
       this.$.calendar1.setAttribute("active");
-      this.dateSelectorDayValue = moment(this.datePickerStartValue).format('YYYY-MM-DD');
+      this.dateSelectorDayValue = moment(startDate).format('YYYY-MM-DD');
     } else if (this.showRangeSelector) {
       this.$.calendarRange.setAttribute("active");
+      this.$.datePicker.datePickerStartValue = startDate;
+      this.$.datePicker.datePickerEndValue = endDate;
       this.dateSelectorRangeStartValue = moment(this.datePickerStartValue).format('YYYY-MM-DD');
       this.dateSelectorRangeEndValue = moment(this.datePickerEndValue).format('YYYY-MM-DD');
     }
