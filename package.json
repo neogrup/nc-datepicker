@@ -11,7 +11,7 @@
   },
   "name": "@neogrup/nc-datepicker",
   "main": "nc-datepicker.js",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "resolutions": {
     "inherits": "2.0.3",
     "samsam": "1.1.3",

@@ -399,8 +399,8 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
       this.dateSelectorDayValue = moment(startDate).format('YYYY-MM-DD');
     } else if (this.showRangeSelector) {
       this.$.calendarRange.setAttribute("active");
-      this.$.datePicker.datePickerStartValue = startDate;
-      this.$.datePicker.datePickerEndValue = endDate;
+      this.datePickerStartValue = startDate;
+      this.datePickerEndValue = endDate;
       this.dateSelectorRangeStartValue = moment(this.datePickerStartValue).format('YYYY-MM-DD');
       this.dateSelectorRangeEndValue = moment(this.datePickerEndValue).format('YYYY-MM-DD');
     }
