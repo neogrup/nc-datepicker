@@ -378,15 +378,15 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
 
   _updateView() {
     if (this.startDate != this.endDate) {            
-      this.$.datePicker.showDaySelector = false;
-      this.$.datePicker.showMonthSelector = false;
-      this.$.datePicker.showYearSelector = false;
-      this.$.datePicker.showRangeSelector = true;
+      this.showDaySelector = false;
+      this.showMonthSelector = false;
+      this.showYearSelector = false;
+      this.showRangeSelector = true;
     } else {
-      this.$.datePicker.showMonthSelector = false;
-      this.$.datePicker.showYearSelector = false;
-      this.$.datePicker.showRangeSelector = false;
-      this.$.datePicker.showDaySelector = true;
+      this.showMonthSelector = false;
+      this.showYearSelector = false;
+      this.showRangeSelector = false;
+      this.showDaySelector = true;
     }
 
     let paperButtonsIcons = this.shadowRoot.querySelectorAll("paper-icon-button");
