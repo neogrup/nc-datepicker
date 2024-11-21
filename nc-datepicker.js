@@ -376,6 +376,34 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
     };
   }
 
+  _updateView() {
+    if (this.startDate != this.endDate) {            
+      this.$.datePicker.showDaySelector = false;
+      this.$.datePicker.showMonthSelector = false;
+      this.$.datePicker.showYearSelector = false;
+      this.$.datePicker.showRangeSelector = true;
+    } else {
+      this.$.datePicker.showMonthSelector = false;
+      this.$.datePicker.showYearSelector = false;
+      this.$.datePicker.showRangeSelector = false;
+      this.$.datePicker.showDaySelector = true;
+    }
+
+    let paperButtonsIcons = this.shadowRoot.querySelectorAll("paper-icon-button");
+    paperButtonsIcons.forEach(paperButtonIcon => {
+      if (paperButtonIcon.active) paperButtonIcon.removeAttribute("active");
+    });
+
+    if (this.showDaySelector) {
+      this.$.calendar1.setAttribute("active");
+      this.dateSelectorDayValue = moment(this.datePickerStartValue).format('YYYY-MM-DD');
+    } else if (this.showRangeSelector) {
+      this.$.calendarRange.setAttribute("active");
+      this.dateSelectorRangeStartValue = moment(this.datePickerStartValue).format('YYYY-MM-DD');
+      this.dateSelectorRangeEndValue = moment(this.datePickerEndValue).format('YYYY-MM-DD');
+    }
+  }
+
   _changeDateTypeSelector(e){
     this.showYearSelector = false;
     this.showMonthSelector = false;
