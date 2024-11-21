@@ -460,9 +460,16 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
       case 'day':
         this.$.calendar1.setAttribute("active");
         this.showDaySelector = true;
-        this.dateSelectorDayValue = currentDay;
-        this.datePickerStartValue = currentDay.replace(/-/gi,'');
-        this.datePickerEndValue = currentDay.replace(/-/gi,'');
+        
+        if (this.datePickerStartValue == this.datePickerEndValue) {
+          this.dateSelectorDayValue = this.datePickerStartValue;
+          this.datePickerEndValue = this.datePickerStartValue;
+        } else {
+          this.dateSelectorDayValue = currentDay;
+          this.datePickerStartValue = currentDay.replace(/-/gi,'');
+          this.datePickerEndValue = currentDay.replace(/-/gi,'');
+        }
+        
         this.dispatchEvent(new CustomEvent('date-changed', {detail: {dateStartValue: this.datePickerStartValue, dateEndValue: this.datePickerEndValue }, bubbles: true, composed: true }));
         break;
       case 'range':
