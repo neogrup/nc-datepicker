@@ -415,6 +415,7 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
     } else if (this.showYearSelector) {
       this.$.calendar365.setAttribute("active");
       this.dateSelectorYearValue = startDate.substring(0,3);
+      this.set('dateSelectorYearValue', this.dateSelectorYearValue);
       this.datePickerStartValue = startDate;
       this.datePickerEndValue = endDate;
       this.dateSelectorRangeStartValue = moment(this.datePickerStartValue).format('YYYY-MM-DD');
