@@ -274,6 +274,10 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
         type: Boolean,
         value: false
       },
+      doNotChangeDay:{
+        type: Boolean,
+        value: false
+      },
     };
   }
 
@@ -480,7 +484,9 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
         this.showDaySelector = true;
         
         if ((this.datePickerStartValue == this.datePickerEndValue) && (!previousDaySelected)){
+          this.doNotChangeDay = true;
           this.dateSelectorDayValue = this.datePickerStartValue;
+          this.doNotChangeDay = false;
           this.datePickerEndValue = this.datePickerStartValue;
         } else {
           this.dateSelectorDayValue = currentDay;
@@ -522,6 +528,7 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
   }
 
   _dateSelectorDayValueChanged(e){
+    if (this.doNotChangeDay) return;
     if (!e.detail.value) return;
     this.datePickerStartValue =  e.detail.value.replace(/-/gi,'');
     this.datePickerEndValue =  e.detail.value.replace(/-/gi,'');
