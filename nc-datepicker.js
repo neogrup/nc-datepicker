@@ -485,7 +485,7 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
         
         if ((this.datePickerStartValue == this.datePickerEndValue) && (!previousDaySelected)){
           this.doNotChangeDay = true;
-          this.dateSelectorDayValue = this.datePickerStartValue;
+          this.dateSelectorDayValue = moment(this.datePickerStartValue).format('YYYY-MM-DD');
           this.doNotChangeDay = false;
           this.datePickerEndValue = this.datePickerStartValue;
         } else {
