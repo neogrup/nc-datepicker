@@ -381,15 +381,18 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
       return;
     }
 
+    this.showDaySelector = false;
+    this.showMonthSelector = false;
+    this.showYearSelector = false;
+    this.showRangeSelector = false;
+
     if (startDate != endDate) {            
-      this.showDaySelector = false;
-      this.showMonthSelector = false;
-      this.showYearSelector = false;
-      this.showRangeSelector = true;
+      if ((startDate.substring(0,3) == endDate.substring(0,3)) && (startDate.substring(4,7)=='0101') && (endDate.substring(4,7)=='1231')) {
+        this.showYearSelector = true;
+      } else {
+        this.showRangeSelector = true;
+      }
     } else {
-      this.showMonthSelector = false;
-      this.showYearSelector = false;
-      this.showRangeSelector = false;
       this.showDaySelector = true;
     }
 
