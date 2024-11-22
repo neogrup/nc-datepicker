@@ -387,7 +387,7 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
     this.showRangeSelector = false;
 
     if (startDate != endDate) {            
-      if ((startDate.substring(0,3) == endDate.substring(0,3)) && (startDate.substring(4,7)=='0101') && (endDate.substring(4,7)=='1231')) {
+      if ((startDate.substring(0,4) == endDate.substring(0,4)) && (startDate.substring(4,8)=='0101') && (endDate.substring(4,8)=='1231')) {
         this.showYearSelector = true;
       } else {
         this.showRangeSelector = true;
