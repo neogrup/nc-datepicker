@@ -424,6 +424,7 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
   }
 
   _changeDateTypeSelector(e){
+    let previousDaySelected = this.showDaySelector;
     this.showYearSelector = false;
     this.showMonthSelector = false;
     this.showDaySelector = false;
@@ -478,7 +479,7 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
         this.$.calendar1.setAttribute("active");
         this.showDaySelector = true;
         
-        if (this.datePickerStartValue == this.datePickerEndValue) {
+        if ((this.datePickerStartValue == this.datePickerEndValue) && (!previousDaySelected)){
           this.dateSelectorDayValue = this.datePickerStartValue;
           this.datePickerEndValue = this.datePickerStartValue;
         } else {
