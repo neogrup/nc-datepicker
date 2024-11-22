@@ -377,7 +377,7 @@ class NcDatepicker extends mixinBehaviors([AppLocalizeBehavior], MixinDatepicker
   }
 
   _updateView(startDate, endDate) {
-    if ((startDate==this.this.datePickerStartValue) && (endate == this.datePickerEndValue)) {
+    if ((startDate==this.datePickerStartValue) && (endDate == this.datePickerEndValue)) {
       return;
     }
 
